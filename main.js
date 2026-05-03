@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             startStopwatchBtn.textContent = 'Start';
         } else { // If stopped, start it
             startTime = Date.now() - pausedTime;
-            stopwatchInterval = setInterval(updateStopwatch, 10);
+            stopwatchInterval = setInterval(updateStopwatch, 1000);
             startStopwatchBtn.textContent = 'Stop';
         }
     });
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(stopwatchInterval);
         stopwatchInterval = null;
         pausedTime = 0;
-        stopwatchDisplay.textContent = '00:00:00.00';
+        stopwatchDisplay.textContent = '00:00:00';
         startStopwatchBtn.textContent = 'Start';
     });
 
@@ -111,9 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const h = Math.floor(elapsedTime / 3600000);
         const m = Math.floor((elapsedTime % 3600000) / 60000);
         const s = Math.floor((elapsedTime % 60000) / 1000);
-        const cs = Math.floor((elapsedTime % 1000) / 10);
 
         stopwatchDisplay.textContent = 
-            `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}.${cs.toString().padStart(2, '0')}`;
+            `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
     }
 });
