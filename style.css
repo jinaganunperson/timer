@@ -1,1 +1,110 @@
-/* Add styles here */
+
+:root {
+    --primary-color: #1a1a1a;
+    --secondary-color: #2c2c2c;
+    --accent-color: #00aaff;
+    --text-color: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-image: radial-gradient(circle, var(--secondary-color) 1px, transparent 1px);
+    background-size: 10px 10px;
+}
+
+.app-container {
+    background-color: var(--secondary-color);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    width: 90%;
+    max-width: 500px;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-link {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 18px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: color 0.3s, border-bottom 0.3s;
+    border-bottom: 2px solid transparent;
+}
+
+.tab-link.active {
+    color: var(--accent-color);
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.timer-display, .stopwatch-display {
+    font-size: 4em;
+    font-weight: 300;
+    text-align: center;
+    margin: 20px 0;
+    letter-spacing: 2px;
+}
+
+.timer-display input {
+    width: 80px;
+    font-size: 1em;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.timer-controls, .stopwatch-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+button {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(0, 170, 255, 0.2);
+}
+
+button:hover {
+    background-color: #0088cc;
+    box-shadow: 0 6px 20px rgba(0, 170, 255, 0.4);
+}
+
+@media (max-width: 480px) {
+    .timer-display, .stopwatch-display {
+        font-size: 3em;
+    }
+
+    .timer-display input {
+        width: 60px;
+    }
+}

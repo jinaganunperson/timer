@@ -1,14 +1,45 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer and Stopwatch</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+    <div class="app-container">
+        <div class="tabs">
+            <button class="tab-link active" data-tab="timer">Timer</button>
+            <button class="tab-link" data-tab="stopwatch">Stopwatch</button>
+        </div>
+
+        <div id="timer" class="tab-content active">
+            <div class="timer-display">
+                <input type="number" id="hours" min="0" max="23" value="0">
+                <span>:</span>
+                <input type="number" id="minutes" min="0" max="59" value="10">
+                <span>:</span>
+                <input type="number" id="seconds" min="0" max="59" value="0">
+            </div>
+            <div class="timer-controls">
+                <button id="start-timer">Start</button>
+                <button id="pause-timer">Pause</button>
+                <button id="reset-timer">Reset</button>
+            </div>
+        </div>
+
+        <div id="stopwatch" class="tab-content">
+            <div class="stopwatch-display">00:00:00.000</div>
+            <div class="stopwatch-controls">
+                <button id="start-stopwatch">Start</button>
+                <button id="pause-stopwatch">Pause</button>
+                <button id="reset-stopwatch">Reset</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
 </body>
 </html>
