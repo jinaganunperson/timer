@@ -18,13 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const minutesInput = document.getElementById('minutes');
     const secondsInput = document.getElementById('seconds');
     const startTimerBtn = document.getElementById('start-timer');
-    const pauseTimerBtn = document.getElementById('pause-timer');
     const stopTimerBtn = document.getElementById('stop-timer');
     const resetTimerBtn = document.getElementById('reset-timer');
 
     let timerInterval;
     let timerSeconds = 0;
-    let initialTimerSeconds = 0;
 
     function setInputsDisabled(disabled) {
         hoursInput.disabled = disabled;
@@ -33,23 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     startTimerBtn.addEventListener('click', () => {
-        initialTimerSeconds = parseInt(hoursInput.value) * 3600 + parseInt(minutesInput.value) * 60 + parseInt(secondsInput.value);
-        timerSeconds = initialTimerSeconds;
+        if (timerSeconds === 0) { // Only set from inputs if timer is not already running/paused
+            timerSeconds = parseInt(hoursInput.value) * 3600 + parseInt(minutesInput.value) * 60 + parseInt(secondsInput.value);
+        }
+
         if (timerSeconds > 0) {
             startTimer();
             setInputsDisabled(true);
         }
     });
 
-    pauseTimerBtn.addEventListener('click', () => {
-        clearInterval(timerInterval);
-        setInputsDisabled(false);
-    });
-
     stopTimerBtn.addEventListener('click', () => {
         clearInterval(timerInterval);
-        timerSeconds = initialTimerSeconds;
-        updateTimerDisplay();
         setInputsDisabled(false);
     });
 
@@ -58,10 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
         hoursInput.value = '0';
         minutesInput.value = '10';
         secondsInput.value = '0';
+        timerSeconds = 0;
         setInputsDisabled(false);
     });
 
     function startTimer() {
+        clearInterval(timerInterval); // Ensure no multiple intervals are running
         timerInterval = setInterval(() => {
             timerSeconds--;
             updateTimerDisplay();
@@ -84,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Stopwatch
     const stopwatchDisplay = document.querySelector('.stopwatch-display');
     const startStopwatchBtn = document.getElementById('start-stopwatch');
-    const pauseStopwatchBtn = document.getElementById('pause-stopwatch');
     const resetStopwatchBtn = document.getElementById('reset-stopwatch');
 
     let stopwatchInterval;
@@ -92,16 +86,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let pausedTime = 0;
 
     startStopwatchBtn.addEventListener('click', () => {
-        if (!stopwatchInterval) {
+        if (stopwatchInterval) { // If running, stop it
+            clearInterval(stopwatchInterval);
+            stopwatchInterval = null;
+            pausedTime = Date.now() - startTime;
+            startStopwatchBtn.textContent = 'Start';
+        } else { // If stopped, start it
             startTime = Date.now() - pausedTime;
             stopwatchInterval = setInterval(updateStopwatch, 10);
+            startStopwatchBtn.textContent = 'Stop';
         }
-    });
-
-    pauseStopwatchBtn.addEventListener('click', () => {
-        clearInterval(stopwatchInterval);
-        stopwatchInterval = null;
-        pausedTime = Date.now() - startTime;
     });
 
     resetStopwatchBtn.addEventListener('click', () => {
@@ -109,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
         stopwatchInterval = null;
         pausedTime = 0;
         stopwatchDisplay.textContent = '00:00:00.000';
+        startStopwatchBtn.textContent = 'Start';
     });
 
     function updateStopwatch() {
