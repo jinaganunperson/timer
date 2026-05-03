@@ -19,20 +19,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const secondsInput = document.getElementById('seconds');
     const startTimerBtn = document.getElementById('start-timer');
     const pauseTimerBtn = document.getElementById('pause-timer');
+    const stopTimerBtn = document.getElementById('stop-timer');
     const resetTimerBtn = document.getElementById('reset-timer');
 
     let timerInterval;
     let timerSeconds = 0;
+    let initialTimerSeconds = 0;
+
+    function setInputsDisabled(disabled) {
+        hoursInput.disabled = disabled;
+        minutesInput.disabled = disabled;
+        secondsInput.disabled = disabled;
+    }
 
     startTimerBtn.addEventListener('click', () => {
-        timerSeconds = parseInt(hoursInput.value) * 3600 + parseInt(minutesInput.value) * 60 + parseInt(secondsInput.value);
+        initialTimerSeconds = parseInt(hoursInput.value) * 3600 + parseInt(minutesInput.value) * 60 + parseInt(secondsInput.value);
+        timerSeconds = initialTimerSeconds;
         if (timerSeconds > 0) {
             startTimer();
+            setInputsDisabled(true);
         }
     });
 
     pauseTimerBtn.addEventListener('click', () => {
         clearInterval(timerInterval);
+        setInputsDisabled(false);
+    });
+
+    stopTimerBtn.addEventListener('click', () => {
+        clearInterval(timerInterval);
+        timerSeconds = initialTimerSeconds;
+        updateTimerDisplay();
+        setInputsDisabled(false);
     });
 
     resetTimerBtn.addEventListener('click', () => {
@@ -40,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hoursInput.value = '0';
         minutesInput.value = '10';
         secondsInput.value = '0';
+        setInputsDisabled(false);
     });
 
     function startTimer() {
@@ -48,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateTimerDisplay();
             if (timerSeconds <= 0) {
                 clearInterval(timerInterval);
+                setInputsDisabled(false);
             }
         }, 1000);
     }
